@@ -104,6 +104,7 @@
 
     const kirbyGif = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTh6aDJwczdjcTdvYXdteTkycDFid3R1NzY5cDg5YjhhenQyeXV1ciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l2Bi6ULIiOnnMSC94D/giphy.gif";
     const sadGif = "https://media.giphy.com/media/3oEdv4hwWTq1Zb4KBy/giphy.gif";
+    const link= "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWx1YnczbnFxNjFuYTVwaHptbGsxMjFrOHV5MHcwaXowdnB0ZWJjNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/NVBR6cLvUjV9C/giphy.gif";
 
     document.getElementById('quizForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -125,6 +126,7 @@
       if (errors.length === 0) {
         resultDiv.innerHTML = `
           <img class="gif" src="${kirbyGif}" alt="Kirby feliz">
+          <img class="gif" src="${link}" alt="Link cool">
           <h2>¡Ganaste! 🎉</h2>
           <div>¡Todas las respuestas son correctas!</div>
         `;
