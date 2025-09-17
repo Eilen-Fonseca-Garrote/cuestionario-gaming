@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cuestionario Gaming</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #ffdae7 0%, #c2f2ff 100%);
+      color: #333;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 500px;
+      background: #fff;
+      margin: 40px auto;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+      padding: 32px;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .question {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      padding: 6px 0;
+      cursor: pointer;
+    }
+    button {
+      background: #ff61a6;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.2s;
+      display: block;
+      width: 100%;
+    }
+    button:hover {
+      background: #e03e84;
+    }
+    .result {
+      text-align: center;
+      margin-top: 24px;
+    }
+    .gif {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 180px;
+      border-radius: 14px;
+      background: #eee;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .errors {
+      background: #ffe4ec;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 16px auto;
+      color: #d6003b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cuestionario Gaming</h1>
+    <form id="quizForm">
+      <div class="question">
+        <strong>1. ¿Cuál es el personaje principal de la saga The Legend of Zelda?</strong>
+        <label><input type="radio" name="q1" value="a"> Zelda</label>
+        <label><input type="radio" name="q1" value="b"> Link</label>
+        <label><input type="radio" name="q1" value="c"> Ganondorf</label>
+      </div>
+      <div class="question">
+        <strong>2. ¿Cuál es el nombre del protagonista rosado de Nintendo?</strong>
+        <label><input type="radio" name="q2" value="a"> Jigglypuff</label>
+        <label><input type="radio" name="q2" value="b"> Kirby</label>
+        <label><input type="radio" name="q2" value="c"> Yoshi</label>
+      </div>
+      <div class="question">
+        <strong>3. ¿En qué juego puedes construir libremente usando bloques?</strong>
+        <label><input type="radio" name="q3" value="a"> Minecraft</label>
+        <label><input type="radio" name="q3" value="b"> Fortnite</label>
+        <label><input type="radio" name="q3" value="c"> Among Us</label>
+      </div>
+      <button type="submit">Enviar respuestas</button>
+    </form>
+    <div id="result" class="result"></div>
+  </div>
+  <script>
+    const correctAnswers = {
+      q1: 'b', // Link
+      q2: 'b', // Kirby
+      q3: 'a'  // Minecraft
+    };
+
+    const kirbyGif = "https://media.giphy.com/media/l41YtZOb9EUABnuqA/giphy.gif";
+    const sadGif = "https://media.giphy.com/media/3oEdv4hwWTq1Zb4KBy/giphy.gif";
+
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const userAnswers = {
+        q1: document.querySelector('input[name="q1"]:checked')?.value,
+        q2: document.querySelector('input[name="q2"]:checked')?.value,
+        q3: document.querySelector('input[name="q3"]:checked')?.value
+      };
+      let errors = [];
+      Object.keys(correctAnswers).forEach(key => {
+        if (userAnswers[key] !== correctAnswers[key]) {
+          let questionText = document.querySelector(`.question:nth-child(${Object.keys(correctAnswers).indexOf(key) + 2}) strong`).textContent;
+          errors.push(`❌ <b>${questionText}</b>`);
+        }
+      });
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = "";
+      if (errors.length === 0) {
+        resultDiv.innerHTML = `
+          <img class="gif" src="${kirbyGif}" alt="Kirby feliz">
+          <h2>¡Ganaste! 🎉</h2>
+          <div>¡Todas las respuestas son correctas!</div>
+        `;
+      } else {
+        resultDiv.innerHTML = `
+          <img class="gif" src="${sadGif}" alt="Cara triste">
+          <h2>Perdiste 😢</h2>
+          <div class="errors">
+            <b>Errores en tus respuestas:</b>
+            <ul>
+              ${errors.map(e => `<li>${e}</li>`).join("")}
+            </ul>
+          </div>
+        `;
+      }
+      document.getElementById('quizForm').style.display = "none";
+    });
+  </script>
+</body>
+</html>
